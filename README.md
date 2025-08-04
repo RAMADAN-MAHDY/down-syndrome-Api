@@ -2,14 +2,41 @@
 
 ## نظرة عامة
 مشروع Express بنمط MVC باستخدام TypeScript، يوفر نقاط نهاية لخدمة تطبيق توجيه وإرشاد وتقويم فعاليات ومحتوى رقمي.
-
 ---
+## لينك ال api الرئيسي https://down-syndrome-api.vercel.app 
 
 ## نقاط نهاية واجهة برمجة التطبيقات (API Endpoints)
 
 ### 1. دليل التوجيه والإرشاد حسب الفئة العمرية
 - **جلب الفئات العمرية المتاحة:**
-  - `GET /api/age-groups`
+  - `GET /api/getAgeGroups`
+-مثال :
+GET https://down-syndrome-api.vercel.app/api/getAgeGroups
+الاستجابة:
+
+json
+Copy
+Edit
+[
+  {
+    "_id": "64fd74cc2d87c8f9540a0c1b",
+    "name": "من 5 لـ 10 سنين",
+    "createdAt": "2025-08-04T10:00:00.000Z",
+    "updatedAt": "2025-08-04T10:00:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "64fd74cc2d87c8f9540a0c2c",
+    "name": "من 11 لـ 15 سنه",
+    "createdAt": "2025-08-04T10:05:00.000Z",
+    "updatedAt": "2025-08-04T10:05:00.000Z",
+    "__v": 0
+  }
+]
+
+
+  
+
 - **جلب المحتوى الإرشادي لفئة عمرية محددة:**
   - `GET /api/age-groups/{ageGroupId}/content`
 
