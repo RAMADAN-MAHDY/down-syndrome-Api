@@ -32,7 +32,7 @@ connectDb();
 
 app.use('/api', ageGroupRoutes);
 app.use('/api/events', eventRoutes);
-app.use('/api/articles', articleRoutes);
+app.use('/api', articleRoutes);
 app.use('/api/admin', adminRoutes);
 
 app.get('/', (req, res) => {

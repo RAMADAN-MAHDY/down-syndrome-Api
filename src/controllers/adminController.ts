@@ -1,14 +1,40 @@
 import type { Request, Response } from 'express';
+import ContentModel from '../models/content.js';
+import AgeGroupModel from '../models/ageGroup.js';
+
+export const addContent = async (req: Request, res: Response) => {
+    // إضافة محتوى جديد
+    const { title, type, description, articleText, url, ageGroup, problemTags } = req.body;
+
+    if (!title || !type || !description || !ageGroup ) {
+        return res.status(400).json({ error: 'مطلوب عنوان ونوع ووصف وفئة عمرية' });
+    }
+        if (!articleText && !url) {
+            return res.status(400).json({ error: 'مطلوب نص المقال أو رابط' });
+        }
+   
+    const newContent = new ContentModel({
+        title,  
+        type,
+        description,
+        articleText,
+        url,
+        ageGroup,
+        problemTags: problemTags 
+    });
+    newContent.save()
+        .then(content => res.status(201).json(content))
+        .catch(err => res.status(500).json({ error: 'خطأ في حفظ المحتوى', details: err.message }));
+
+};
+
+
 
 export const adminLogin = (req: Request, res: Response) => {
   // تسجيل دخول المسؤول
   res.json({ success: true, token: 'admin-token' });
 };
 
-export const addContent = (req: Request, res: Response) => {
-  // إضافة محتوى جديد
-  res.json({ success: true, id: 1 });
-};
 
 export const updateContent = (req: Request, res: Response) => {
   // تحديث محتوى موجود
@@ -20,10 +46,6 @@ export const deleteContent = (req: Request, res: Response) => {
   res.json({ success: true });
 };
 
-export const getAllContent = (req: Request, res: Response) => {
-  // جلب جميع المحتوى
-  res.json([{ id: 1, title: 'مقال إداري' }]);
-};
 
 export const addEvent = (req: Request, res: Response) => {
   // إضافة فعالية جديدة
