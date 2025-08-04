@@ -4,11 +4,33 @@ import ageGroupRoutes from './routes/ageGroupRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
 import articleRoutes from './routes/articleRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import connectDb from './config/connectDB.js';
+import cors from 'cors';
+
+import dotenv from 'dotenv';
+dotenv.config();
+
+
 
 const app = express();
 app.use(bodyParser.json());
 
-app.use('/api/age-groups', ageGroupRoutes);
+const corsOptions = {
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+
+
+connectDb();
+
+
+
+
+app.use('/api', ageGroupRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/articles', articleRoutes);
 app.use('/api/admin', adminRoutes);
