@@ -57,7 +57,7 @@ const query = new URLSearchParams({
   type: 'تعليم',
 }).toString();
 
-fetch(`https://your-api-domain.com/api/content/filter?${query}`, {
+fetch(`https://down-syndrome-api.vercel.app/api/content/filter?${query}`, {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ fetch(`https://your-api-domain.com/api/content/filter?${query}`, {
 ```ts
 import axios from 'axios';
 
-axios.get('https://your-api-domain.com/api/content/filter', {
+axios.get('https://down-syndrome-api.vercel.app/api/content/filter', {
   params: {
     ageGroupId: '64fd74cc2d87c8f9540a0c1b',
     problemTag: 'تأخر لغوي',
@@ -109,6 +109,7 @@ axios.get('https://your-api-domain.com/api/content/filter', {
 
 ```
 ```
+
 
 
 ### 2. تقويم الفعاليات
