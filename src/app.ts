@@ -35,5 +35,8 @@ app.use('/api/events', eventRoutes);
 app.use('/api/articles', articleRoutes);
 app.use('/api/admin', adminRoutes);
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the Down Syndrome API');   
+});
 
 export default app;
