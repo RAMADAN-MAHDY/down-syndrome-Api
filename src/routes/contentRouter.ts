@@ -3,7 +3,7 @@ import { getContentFilter, } from '../controllers/contentController.js';
 
 const router = Router();
 
-router.get('/getContentFilter', getContentFilter);
+router.get('/content/filter', getContentFilter);
 
 
 
