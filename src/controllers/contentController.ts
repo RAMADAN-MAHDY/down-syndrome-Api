@@ -4,7 +4,7 @@ import ContentModel from '../models/content.js';
 
 export const getContentFilter =async (req: Request, res: Response) => {
     try {
-    const { ageGroupId, problemTag, type } = req.query;
+    const { ageGroupId, problemTag, type , sluge} = req.query;
 
     console.log('Query Parameters:', { ageGroupId, problemTag, type });
     const filter: Record<string, any> = {};
@@ -12,7 +12,7 @@ export const getContentFilter =async (req: Request, res: Response) => {
     if (ageGroupId) filter.ageGroup = ageGroupId;
     if (problemTag) filter.problemTag = problemTag; // مش array
     if (type) filter.type = type;
-    
+    if (sluge) filter.sluge = sluge; // Assuming slug is a field in your ContentModel
 
    const cntent = await ContentModel.find(filter).populate('ageGroup');
 
@@ -24,6 +24,16 @@ export const getContentFilter =async (req: Request, res: Response) => {
         return res.status(500).json({ error: 'خطأ في جلب المحتوى' });
     }
 };
+
+
+
+
+
+
+
+
+
+
 
 export const searchArticles = (req: Request, res: Response) => {
   // البحث عن المقالات بالكلمات المفتاحية

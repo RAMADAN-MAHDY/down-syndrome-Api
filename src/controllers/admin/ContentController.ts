@@ -1,20 +1,25 @@
 import type { Request, Response } from 'express';
-import ContentModel from '../models/content.js';
-import AgeGroupModel from '../models/ageGroup.js';
+import ContentModel from '../../models/content.js';
 
+
+// إضافة محتوى جديد
 export const addContent = async (req: Request, res: Response) => {
     // إضافة محتوى جديد
-    const { title, type, description, articleText, url, ageGroup, problemTags } = req.body;
+    const { title, type, description, articleText, url, ageGroup, problemTags , sluge} = req.body;
 
-    if (!title || !type || !description || !ageGroup ) {
+    if (!title || !type || !description || !ageGroup  ) {
         return res.status(400).json({ error: 'مطلوب عنوان ونوع ووصف وفئة عمرية' });
     }
         if (!articleText && !url) {
             return res.status(400).json({ error: 'مطلوب نص المقال أو رابط' });
         }
+        if(sluge !== 'vid' && sluge !== 'text') {
+            return res.status(400).json({ error: 'نوع المحتوى غير صالح لازم يكون vid or text'  });
+        }
    
     const newContent = new ContentModel({
         title,  
+        sluge,
         type,
         description,
         articleText,
