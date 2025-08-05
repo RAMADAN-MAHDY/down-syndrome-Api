@@ -29,9 +29,7 @@ const contentSchema = new Schema<Content>(
         url: { type: String },
         articleText: { type: String },
         ageGroup: { type: mongoose.Schema.Types.ObjectId, ref: "AgeGroup", required: true },
-        problemTag: {
-            type: String,
-        },
+        problemTag: { type: String , required: true }, // Assuming problemTag is a string
     },
     { timestamps: true }
 );
