@@ -47,6 +47,7 @@ GET https://down-syndrome-api.vercel.app/api/content/filter
 | ageGroupId | ❌        | ID الخاص بالفئة العمرية            |
 | problemTag | ❌        | المشكلة التي يعاني منها الطفل      |
 | type       | ❌        | نوع المحتوى (تعليم - صحة - نشاطات) |
+| sluge      | ❌        | نوع المحتوى (text - vid ) |
 
 ### 🧾 مثال للاستخدام باستخدام `fetch`
 
@@ -55,6 +56,7 @@ const query = new URLSearchParams({
   ageGroupId: '64fd74cc2d87c8f9540a0c1b',
   problemTag: 'فرط حركة',
   type: 'تعليم',
+  sluge : 'text'
 }).toString();
 
 fetch(`https://down-syndrome-api.vercel.app/api/content/filter?${query}`, {
@@ -77,7 +79,8 @@ axios.get('https://down-syndrome-api.vercel.app/api/content/filter', {
   params: {
     ageGroupId: '64fd74cc2d87c8f9540a0c1b',
     problemTag: 'تأخر لغوي',
-    type: 'صحة',
+    type: 'صحة',   // او نشاطات او تعليم
+    sluge:"text"    // او  vid      
   },
 })
 .then(res => console.log(res.data))
@@ -92,6 +95,7 @@ axios.get('https://down-syndrome-api.vercel.app/api/content/filter', {
     "_id": "662b...",
     "title": "تمرينات لتحسين التركيز",
     "type": "تعليم",
+    "sluge":"text",
     "description": "تمرينات للأطفال ذوي فرط الحركة",
     "articleText": "تفاصيل المقال...",
     "ageGroup": {

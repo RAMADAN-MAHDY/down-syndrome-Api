@@ -3,8 +3,13 @@ import bodyParser from 'body-parser';
 import ageGroupRoutes from './routes/ageGroupRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
 import articleRoutes from './routes/articleRoutes.js';
-import adminRoutes from './routes/adminRoutes.js';
+import contentRoutes from './routes/contentRouter.js';
+
 import connectDb from './config/connectDB.js';
+
+
+import adminRoutes from './routes/admin/aontentRoutes.js';
+import  AddArticle  from './routes/admin/articleRouter.js';
 import cors from 'cors';
 
 import dotenv from 'dotenv';
@@ -32,8 +37,9 @@ connectDb();
 
 app.use('/api', ageGroupRoutes);
 app.use('/api/events', eventRoutes);
-app.use('/api', articleRoutes);
+app.use('/api', contentRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/admin', AddArticle);
 
 app.get('/', (req, res) => {
     res.send('Welcome to the Down Syndrome API');   

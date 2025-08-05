@@ -25,16 +25,6 @@ export const getContentFilter =async (req: Request, res: Response) => {
     }
 };
 
-
-
-
-
-
-
-
-
-
-
 export const searchArticles = (req: Request, res: Response) => {
   // البحث عن المقالات بالكلمات المفتاحية
   const { keyword } = req.query;
