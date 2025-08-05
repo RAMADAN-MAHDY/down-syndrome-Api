@@ -5,10 +5,11 @@ import ContentModel from '../../models/content.js';
 // إضافة محتوى جديد
 export const addContent = async (req: Request, res: Response) => {
     // إضافة محتوى جديد
-    const { title, type, description, articleText, url, ageGroup, problemTags , sluge} = req.body;
+    const { title, type, description, articleText, url, ageGroup, problemTag , sluge} = req.body;
 
-    if (!title || !type || !description || !ageGroup  ) {
-        return res.status(400).json({ error: 'مطلوب عنوان ونوع ووصف وفئة عمرية' });
+    console.log('Request Body:', problemTag);
+    if (!title || !type || !description || !ageGroup  ||!problemTag) {
+        return res.status(400).json({ error: 'مطلوب عنوان ونوع ووصف وفئة عمرية والمشكله' });
     }
         if (!articleText && !url) {
             return res.status(400).json({ error: 'مطلوب نص المقال أو رابط' });
@@ -25,7 +26,7 @@ export const addContent = async (req: Request, res: Response) => {
         articleText,
         url,
         ageGroup,
-        problemTags: problemTags 
+        problemTag,
     });
     newContent.save()
         .then(content => res.status(201).json(content))
