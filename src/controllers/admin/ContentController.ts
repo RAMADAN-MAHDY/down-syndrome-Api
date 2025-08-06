@@ -2,9 +2,25 @@ import type { Request, Response } from 'express';
 import ContentModel from '../../models/content.js';
 
 
+function convertToEmbedUrl(url: string): string {
+  if (url.includes('youtu.be')) {
+    const videoId = url.split('/').pop()?.split('?')[0];
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+
+  if (url.includes('youtube.com/watch?v=')) {
+    const videoId = url.split('v=')[1]?.split('&')[0];
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+
+  // رجع الرابط الأصلي لو مش عارف يعالجه
+  return url;
+}
+
+
 // إضافة محتوى جديد
 export const addContent = async (req: Request, res: Response) => {
-    // إضافة محتوى جديد
+
     const { title, type, description, articleText, url, ageGroup, problemTag , sluge} = req.body;
 
     console.log('Request Body:', problemTag);
@@ -17,14 +33,20 @@ export const addContent = async (req: Request, res: Response) => {
         if(sluge !== 'vid' && sluge !== 'text') {
             return res.status(400).json({ error: 'نوع المحتوى غير صالح لازم يكون vid or text'  });
         }
+        // إذا كان النوع هو فيديو، يجب أن يكون الرابط صالحًا
+        if (sluge === 'vid' && !url) {
+            return res.status(400).json({ error: 'مطلوب رابط الفيديو' });
+        }   
+       const VidUrl = convertToEmbedUrl(url);
+        
    
     const newContent = new ContentModel({
         title,  
         sluge,
         type,
         description,
-        articleText,
-        url,
+        articleText : sluge === 'text' ? articleText : undefined, // إذا كان النوع نص، نضيف النص
+        url : sluge === 'vid' ? VidUrl : undefined, // إذا كان النوع فيديو، نضيف الرابط
         ageGroup,
         problemTag,
     });

@@ -13,8 +13,8 @@ import  AddArticle  from './routes/admin/articleRouter.js';
 import cors from 'cors';
 
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 dotenv.config();
-
 
 
 const app = express();
@@ -31,15 +31,16 @@ app.use(cors(corsOptions));
 
 
 connectDb();
+mongoose.set('autoIndex', true);
 
 
 
-
-app.use('/api', ageGroupRoutes);
-app.use('/api/events', eventRoutes);
-app.use('/api', contentRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/admin', AddArticle);
+app.use('/api', ageGroupRoutes); // جلب عمر الطفل
+app.use('/api', articleRoutes); // جلب المقالات
+app.use('/api/events', eventRoutes); 
+app.use('/api', contentRoutes); // جلب المحتوى
+app.use('/api/admin', adminRoutes); // انشاء وتحديث وحذف المحتوى
+app.use('/api/admin', AddArticle); // انشاء وتحديث وحذف المقالات
 
 app.get('/', (req, res) => {
     res.send('Welcome to the Down Syndrome API');   

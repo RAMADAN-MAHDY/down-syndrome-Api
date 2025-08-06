@@ -1,17 +1,10 @@
 import { Router } from 'express';
-import { getContentFilter, searchArticles, getArticleTopics } from '../controllers/articleController.js';
+import { searchForArticle, getArticleFilter } from '../controllers/articleController.js';
 
 const router = Router();
+// Define the routes for articles
+router.get('/getArticle', getArticleFilter);
+router.post('/search', searchForArticle);
 
-router.get('/getContentFilter', getContentFilter);
-
-
-
-
-
-
-
-// router.get('/search', searchArticles);
-// router.get('/topics', getArticleTopics);
 
 export default router;
