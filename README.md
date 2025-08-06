@@ -110,5 +110,135 @@ axios.get('https://down-syndrome-api.vercel.app/api/content/filter', {
   ...
 ]
 ```
+---
+#### 1. **جلب المقالات**
+
+**المسار:** `/api/getArticle`
+
+**الطريقة:** `GET`
+
+**الوصف:** يقوم بجلب المقالات مع إمكانية التصفية باستخدام `ageGroupId` و `type`.
+**المعلمات:**
+- `ageGroupId` (اختياري): معرف الفئة العمرية.
+- `type` (اختياري): نوع المحتوى (تعليم - صحة - رياضه).
+**الإجابة:**
+
+```json
+[
+    {
+        "_id": "689398bc3d202a3cb42dd8d6",
+        "title": "عنوان الخبر",
+        "type": "صحة",
+        "topic": "الموضوع ",
+        "image": "https://i.ibb.co/ccQzLZHL/fd5856d9eecb.jpg",
+        "imageDeleteUrl": "https://ibb.co/3yctzjqz/cf41e7cf61e5035b2527184e4dd0eb67",
+        "age_group": {
+            "_id": "6890a18df82bf4c994efdd43",
+            "name": "السن 4–6 سنوات",
+            "createdAt": "2025-08-04T12:03:25.754Z",
+            "updatedAt": "2025-08-04T12:03:25.754Z",
+            "__v": 0
+        },
+        "createdAt": "2025-08-06T18:02:36.515Z",
+        "updatedAt": "2025-08-06T18:02:36.515Z",
+        "__v": 0
+    }
+]
+```
+
+**مثال باستخدام Fetch:**
+
+```javascript
+fetch(`https://down-syndrome-api.vercel.app/api/getArticle?ageGroupId=${ageGroupId}&type=${type}`)
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+```
+
+**مثال باستخدام Axios:**
+
+```javascript
+axios.get('https://down-syndrome-api.vercel.app/api/getArticle', {
+  params: {
+    ageGroupId: ageGroupId,
+    type: type
+  }
+})
+.then(response => console.log(response.data))
+.catch(error => console.error('Error:', error));
+```
+
+
+---
+#### 2. **البحث عن المقالات**
+**المسار:** `/api/search`
+
+**الطريقة:** `POST`
+
+**الوصف:** البحث عن المقالات باستخدام كلمة مفتاحية مع إمكانية التصفية باستخدام `ageGroupId` و `type`.
+
+**المعلمات:**
+- `keyword` (اجباري): الكلمة المفتاحية للبحث.
+- `ageGroupId` (اجباري): معرف الفئة العمرية.
+- `type` (اجباري): نوع المحتوى (تعليم - صحة - رياضه).
+
+**الإجابة:**
+
+```json
+[
+    {
+        "_id": "689398bc3d202a3cb42dd8d6",
+        "title": "عنوان الخبر",
+        "type": "صحة",
+        "topic": "الموضوع ",
+        "image": "https://i.ibb.co/ccQzLZHL/fd5856d9eecb.jpg",
+        "imageDeleteUrl": "https://ibb.co/3yctzjqz/cf41e7cf61e5035b2527184e4dd0eb67",
+        "age_group": {
+            "_id": "6890a18df82bf4c994efdd43",
+            "name": "السن 4–6 سنوات",
+            "createdAt": "2025-08-04T12:03:25.754Z",
+            "updatedAt": "2025-08-04T12:03:25.754Z",
+            "__v": 0
+        },
+        "createdAt": "2025-08-06T18:02:36.515Z",
+        "updatedAt": "2025-08-06T18:02:36.515Z",
+        "__v": 0
+    }
+]
+```
+
+**مثال باستخدام Fetch:**
+```javascript
+fetch('https://down-syndrome-api.vercel.app/api/search?keyword=example', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    ageGroupId: '6890a18df82bf4c994efdd43',
+    type: 'صحة'
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+````
+
+**مثال باستخدام Axios:**
+
+```javascript
+axios.post('https://down-syndrome-api.vercel.app/api/search?keyword=example', {
+  ageGroupId: '123',
+  type: 'تعليم'
+})
+.then(response => console.log(response.data))
+.catch(error => console.error('Error:', error));
+
+```
+
+---
+        
+
+
 
 ```

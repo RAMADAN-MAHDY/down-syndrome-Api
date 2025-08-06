@@ -24,5 +24,12 @@ const ArticleScherma = new mongoose.Schema({
     timestamps: true
 })
 
+// ✅ هنا تحط الفهارس (indexes)
+ArticleScherma.index({ title: 'text', topic: 'text' }); // للبحث بالكلمات
+ArticleScherma.index({ type: 1 }); // لتسريع الفلترة حسب النوع
+ArticleScherma.index({ age_group: 1 }); // لتسريع الفلترة حسب الفئة العمرية
+
 const ArticleModel = mongoose.model<Article>("Article", ArticleScherma);
+
+
 export default ArticleModel;
