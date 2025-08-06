@@ -111,7 +111,7 @@ axios.get('https://down-syndrome-api.vercel.app/api/content/filter', {
 ]
 ```
 ---
-#### 1. **جلب المقالات**
+#### 1. **جلب المقالات او الاخبار**
 
 **المسار:** `/api/getArticle`
 
