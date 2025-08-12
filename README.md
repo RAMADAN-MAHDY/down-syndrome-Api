@@ -240,8 +240,235 @@ axios.post('https://down-syndrome-api.vercel.app/api/search?keyword=example', {
 ```
 
 ---
-        
 
+# 3- قسم تواصل معنا
+
+# توثيق واجهة برمجة تطبيقات Contact Us
+
+## 1. إنشاء طلب اتصال (Create Contact Request)
+
+لإنشاء طلب اتصال جديد.
+
+- **المسار (Endpoint):** `POST /api/contact-us`
+- **الوصف:** يقوم بإنشاء سجل اتصال جديد في قاعدة البيانات.
+- **نوع المحتوى (Content-Type):** `application/json`
+
+### جسم الطلب (Request Body):
+
+```json
+{
+  "title": "عنوان الرسالة",
+  "phone": "رقم الهاتف",
+  "date": "تاريخ الرسالة"
+}
+```
+
+### مثال على الاستجابة الناجحة (Successful Response Example):
+
+```json
+{
+  "_id": "65c8f7e3b2e7c8d9f0a1b2c3",
+  "title": "عنوان الرسالة",
+  "phone": "رقم الهاتف",
+  "date": "تاريخ الرسالة",
+  "createdAt": "2024-02-11T12:00:00.000Z",
+  "updatedAt": "2024-02-11T12:00:00.000Z",
+  "__v": 0
+}
+```
+
+### أمثلة على الاستخدام:
+
+#### باستخدام `fetch`:
+
+```javascript
+const createContact = async () => {
+  const data = {
+    title: "استفسار عام",
+    phone: "01234567890",
+    date: "2024-02-11"
+  };
+
+  try {
+    const response = await fetch('/api/contact-us', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'فشل إنشاء الاتصال');
+    }
+
+    const newContact = await response.json();
+    console.log('تم إنشاء الاتصال بنجاح:', newContact);
+  } catch (error) {
+    console.error('خطأ في إنشاء الاتصال:', error.message);
+  }
+};
+
+```
+
+#### باستخدام `axios`:
+
+```javascript
+import axios from 'axios';
+
+const createContactAxios = async () => {
+  const data = {
+    title: "استفسار عن خدمة",
+    phone: "01123456789",
+    date: "2024-02-12"
+  };
+
+  try {
+    const response = await axios.post('/api/contact-us', data);
+    console.log('تم إنشاء الاتصال بنجاح:', response.data);
+  } catch (error) {
+    console.error('خطأ في إنشاء الاتصال:', error.response ? error.response.data.error : error.message);
+  }
+};
+
+```
+
+## 2. جلب جميع طلبات الاتصال (Get All Contact Requests)
+
+لجلب قائمة بجميع طلبات الاتصال الموجودة.
+
+- **المسار (Endpoint):** `GET /api/contact-us-all`
+- **الوصف:** يقوم بإرجاع جميع سجلات الاتصال.
+
+### مثال على الاستجابة الناجحة (Successful Response Example):
+
+```json
+[
+  {
+    "_id": "65c8f7e3b2e7c8d9f0a1b2c3",
+    "title": "استفسار عام",
+    "phone": "01234567890",
+    "date": "2024-02-11",
+    "createdAt": "2024-02-11T12:00:00.000Z",
+    "updatedAt": "2024-02-11T12:00:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "65c8f7e3b2e7c8d9f0a1b2c4",
+    "title": "استفسار عن خدمة",
+    "phone": "01123456789",
+    "date": "2024-02-12",
+    "createdAt": "2024-02-12T10:30:00.000Z",
+    "updatedAt": "2024-02-12T10:30:00.000Z",
+    "__v": 0
+  }
+]
+```
+
+### أمثلة على الاستخدام:
+
+#### باستخدام `fetch`:
+
+```javascript
+const getAllContacts = async () => {
+  try {
+    const response = await fetch('/api/contact-us-all');
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'فشل جلب الاتصالات');
+    }
+
+    const contacts = await response.json();
+    console.log('جميع الاتصالات:', contacts);
+  } catch (error) {
+    console.error('خطأ في جلب جميع الاتصالات:', error.message);
+  }
+};
+
+```
+
+#### باستخدام `axios`:
+
+```javascript
+import axios from 'axios';
+
+const getAllContactsAxios = async () => {
+  try {
+    const response = await axios.get('/api/contact-us-all');
+    console.log('جميع الاتصالات:', response.data);
+  } catch (error) {
+    console.error('خطأ في جلب جميع الاتصالات:', error.response ? error.response.data.error : error.message);
+  }
+};
+
+```
+
+## 3. جلب طلب اتصال بواسطة المعرف (Get Contact Request by ID)
+
+لجلب تفاصيل طلب اتصال محدد باستخدام المعرف الخاص به.
+
+- **المسار (Endpoint):** `GET /api/contact-us/:id`
+- **الوصف:** يقوم بإرجاع سجل اتصال واحد بناءً على المعرف المقدم.
+- **معلمات المسار (Path Parameters):**
+  - `id` (سلسلة نصية): المعرف الفريد لطلب الاتصال.
+
+### مثال على الاستجابة الناجحة (Successful Response Example):
+
+```json
+{
+  "_id": "65c8f7e3b2e7c8d9f0a1b2c3",
+  "title": "استفسار عام",
+  "phone": "01234567890",
+  "date": "2024-02-11",
+  "createdAt": "2024-02-11T12:00:00.000Z",
+  "updatedAt": "2024-02-11T12:00:00.000Z",
+  "__v": 0
+}
+```
+
+### أمثلة على الاستخدام:
+
+#### باستخدام `fetch`:
+
+```javascript
+const getContactById = async (id) => {
+  try {
+    const response = await fetch(`/api/contact-us/${id}`);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'فشل جلب الاتصال');
+    }
+
+    const contact = await response.json();
+    console.log('تفاصيل الاتصال:', contact);
+  } catch (error) {
+    console.error('خطأ في جلب الاتصال بواسطة المعرف:', error.message);
+  }
+};
+
+```
+
+#### باستخدام `axios`:
+
+```javascript
+import axios from 'axios';
+
+const getContactByIdAxios = async (id) => {
+  try {
+    const response = await axios.get(`/api/contact-us/${id}`);
+    console.log('تفاصيل الاتصال:', response.data);
+  } catch (error) {
+    console.error('خطأ في جلب الاتصال بواسطة المعرف:', error.response ? error.response.data.error : error.message);
+  }
+};
+
+```
+```
+
+        
 
 
 ```

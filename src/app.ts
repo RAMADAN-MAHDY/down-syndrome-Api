@@ -4,7 +4,7 @@ import ageGroupRoutes from './routes/ageGroupRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
 import articleRoutes from './routes/articleRoutes.js';
 import contentRoutes from './routes/contentRouter.js';
-
+import createContactUs from './routes/contactUs.js'
 import connectDb from './config/connectDB.js';
 
 
@@ -37,6 +37,7 @@ mongoose.set('autoIndex', true);
 
 app.use('/api', ageGroupRoutes); // جلب عمر الطفل
 app.use('/api', articleRoutes); // جلب المقالات
+app.use('/api', createContactUs); // انشاء نموذج الاتصال بنا
 app.use('/api/events', eventRoutes); 
 app.use('/api', contentRoutes); // جلب المحتوى
 app.use('/api/admin', adminRoutes); // انشاء وتحديث وحذف المحتوى

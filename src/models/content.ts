@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { text } from "stream/consumers";
 
 // أنواع المحتوى
 const contentTypes = ["تعليم", "صحة", "رياضه"] as const;
