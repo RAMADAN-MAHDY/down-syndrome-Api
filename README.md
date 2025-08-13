@@ -466,7 +466,6 @@ const getContactByIdAxios = async (id) => {
 };
 
 ```
-```
 # 4- قسم الفاعليات 
 
 ## 1.  جلب جميع الأحداث او الفاعليات(Get All Events)
