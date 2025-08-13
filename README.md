@@ -473,33 +473,39 @@ const getContactByIdAxios = async (id) => {
 لجلب قائمة بجميع الأحداث الموجودة، مع دعم للتقسيم على صفحات (pagination).
 
 - **المسار (Endpoint):** `GET /api/GetEvents`
-- **الوصف:** يقوم بإرجاع جميع سجلات الأحداث، ويمكن تصفحها باستخدام معلمات الاستعلام `page` و `limit`.
+- **الوصف:** يقوم بإرجاع جميع سجلات الأحداث، ويمكن تصفحها باستخدام معلمات الاستعلام `page` و `limit` , `type` .
 - **معلمات الاستعلام (Query Parameters):**
   - `page` (اختياري، رقم): رقم الصفحة المطلوب (القيمة الافتراضية: 1).
   - `limit` (اختياري، رقم): عدد الأحداث في كل صفحة (القيمة الافتراضية: 10).
-
+  - `type` ['تعليم', 'رياصه', 'صحة']: نوع الأحداث المطلوب (القيمة الافتراضية: "all").
 ### مثال على الاستجابة الناجحة (Successful Response Example):
 
 ```json
 {
-  "page": 1,
-  "limit": 10,
-  "total": 25,
-  "totalPages": 3,
-  "events": [
-    {
-      "_id": "65c8f7e3b2e7c8d9f0a1b2c5",
-      "title": "حدث توعوي",
-      "description": "وصف للحدث التوعوي",
-      "date": "2024-03-15",
-      "time": "10:00",
-      "location": "القاهرة",
-      "createdAt": "2024-02-11T12:00:00.000Z",
-      "updatedAt": "2024-02-11T12:00:00.000Z",
-      "__v": 0
-    },
-    // ... المزيد من الأحداث
-  ]
+    "page": 1,
+    "limit": 1,
+    "total": 4,
+    "totalPages": 4,
+    "events": [
+        {
+            "location": {
+                "type": "Point",
+                "coordinates": [
+                    31.56789,
+                    30.12345
+                ]
+            },
+            "_id": "689be85432f4a0b7c04220f1",
+            "title": "حدث تجريبي ",
+            "type": "صحة",
+            "date": "15 / 8 / 2025",
+            "time": "5م",
+            "createdAt": "2025-08-13T01:20:20.966Z",
+            "updatedAt": "2025-08-13T01:20:20.966Z",
+            "__v": 0
+        },
+        // ...
+    ]
 }
 ```
 
@@ -508,9 +514,9 @@ const getContactByIdAxios = async (id) => {
 #### باستخدام `fetch`:
 
 ```javascript
-const getAllEvents = async (page = 1, limit = 10) => {
+const getAllEvents = async (page = 1, limit = 10 , type = 'صحة') => {
   try {
-    const response = await fetch(`/api/GetEvents?page=${page}&limit=${limit}`);
+    const response = await fetch(`/api/GetEvents?page=${page}&limit=${limit}type=${type}`);
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -532,10 +538,11 @@ const getAllEvents = async (page = 1, limit = 10) => {
 ```javascript
 import axios from 'axios';
 
-const getAllEventsAxios = async (page = 1, limit = 10) => {
+const getAllEventsAxios = async (page = 1, limit = 10 , type = 'صحة') => {
   try {
     const response = await axios.get('/api/GetEvents', {
       params: {
+        type: type, //   'تعليم'او 'رياضه' او 'صحة'
         page: page,
         limit: limit
       }
