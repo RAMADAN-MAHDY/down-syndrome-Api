@@ -1,4 +1,4 @@
-import type { Request, Response } from 'express';
+ import type { Request, Response } from 'express';
 import articleModels from '../models/article.js';
 import mongoose from 'mongoose';
 // import AgeGroupModel from '../models/ageGroup.js';
@@ -81,11 +81,6 @@ export const searchForArticle = async (req: Request, res: Response) => {
         path: "$age_group",
         preserveNullAndEmptyArrays: true
       }
-    });
-
-    // 5. Limit results
-    pipeline.push({
-      $limit: 20
     });
 
     // Execute the aggregation pipeline
