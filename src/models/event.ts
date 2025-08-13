@@ -1,6 +1,6 @@
 import mongoose, { Document } from "mongoose";
 
-const eventTypes = ['تعليم', 'رياصه', 'صحة'] as const;
+const eventTypes = ['تعليم', 'رياضه', 'صحة'] as const;
 
 type eventType = typeof eventTypes[number];
 
