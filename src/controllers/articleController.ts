@@ -31,7 +31,7 @@ export const searchForArticle = async (req: Request, res: Response) => {
   try {
     const { keyword } = req.query;
     const { ageGroupId, type } = req.body;
-
+// error handling
     if (!type || typeof type !== 'string') {
       return res.status(400).json({ error: 'Invalid or missing type' });
     }
@@ -43,6 +43,7 @@ export const searchForArticle = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Invalid or missing keyword' });
     }
 
+    // Construct the aggregation pipeline
     const pipeline: any[] = [];
 
     // 1. Atlas full-text search
@@ -87,6 +88,7 @@ export const searchForArticle = async (req: Request, res: Response) => {
       $limit: 20
     });
 
+    // Execute the aggregation pipeline
     const results = await articleModels.aggregate(pipeline);
 
     return res.status(200).json(results);
