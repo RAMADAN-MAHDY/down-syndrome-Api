@@ -554,7 +554,92 @@ const getAllEventsAxios = async (page = 1, limit = 10 , type = 'صحة') => {
 };
 
 ```
+## 1. البحث عن الأحداث (Search Events)
 
+للبحث عن الأحداث بناءً على كلمة مفتاحية اختيارية ونوع الحدث.
+
+- **المسار (Endpoint):** `GET /api/EventSearch`
+- **الوصف:** يقوم بالبحث عن الأحداث بناءً على كلمة مفتاحية في العنوان (title) ويمكن تصفية النتائج حسب النوع (type).
+- **معلمات الاستعلام (Query Parameters):**
+  - `keyword` (مطلوب، سلسلة نصية): الكلمة المفتاحية للبحث عنها في عنوان الحدث.
+  - `type` (اختياري، سلسلة نصية): نوع الحدث لتصفية النتائج (مثال: 'تعليم', 'رياضه', 'صحة').
+
+### مثال على الاستجابة الناجحة (Successful Response Example):
+
+```json
+[
+ {
+        "_id": "689be85432f4a0b7c04220f1",
+        "title": "حدث تجريبي ",
+        "type": "صحة",
+        "date": "15 / 8 / 2025",
+        "time": "5م",
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                31.56789,
+                30.12345
+            ]
+        },
+        "createdAt": "2025-08-13T01:20:20.966Z",
+        "updatedAt": "2025-08-13T01:20:20.966Z",
+        "__v": 0
+    },
+    //...
+]
+```
+
+### أمثلة على الاستخدام:
+
+#### باستخدام `fetch`:
+
+```javascript
+const searchEvents = async (keyword, type = '') => {
+  let url = `/api/EventSearch?keyword=${encodeURIComponent(keyword)}`;
+  if (type) {
+    url += `&type=${encodeURIComponent(type)}`;
+  }
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'فشل البحث عن الأحداث');
+    }
+
+    const events = await response.json();
+    console.log('نتائج البحث عن الأحداث:', events);
+  } catch (error) {
+    console.error('خطأ في البحث عن الأحداث:', error.message);
+  }
+};
+
+```
+
+#### باستخدام `axios`:
+
+```javascript
+import axios from 'axios';
+
+const searchEventsAxios = async (keyword, type = '') => {
+  try {
+    const response = await axios.get('/api/EventSearch', {
+      params: {
+        keyword: keyword,
+        type: type
+      }
+    });
+    console.log('نتائج البحث عن الأحداث:', response.data);
+  } catch (error) {
+    console.error('خطأ في البحث عن الأحداث:', error.response ? error.response.data.message : error.message);
+  }
+};
+
+```
+```
+
+        
         
         
 
