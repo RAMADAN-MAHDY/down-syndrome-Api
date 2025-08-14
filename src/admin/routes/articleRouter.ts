@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {AddArticle} from '../../controllers/admin/articleController.js';
+import {AddArticle} from '../controllers/articleController.js';
 import {adminAuth} from '../../middlewares/authMiddleware.js'
 import upload from '../../middlewares/multerSetup.js';
 const router = Router();
