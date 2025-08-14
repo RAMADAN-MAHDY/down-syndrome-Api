@@ -66,7 +66,6 @@ export const EventSearch = async (req: Request, res: Response) => {
             pipeline.push({ $match: { type } });
         }
 
-
         const Events = await EventModel.aggregate(pipeline);
 
         return res.status(200).json(Events)
