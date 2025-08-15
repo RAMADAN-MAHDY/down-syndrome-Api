@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { AES, enc } from 'crypto-ts';
 import { generateToken, verifyToken , generateRefreshToken  , verifyRefreshToken} from '../../utils/jwt.js';
-
 dotenv.config();
 
 export const logInAdmin = async (req: Request, res: Response) => {
@@ -79,7 +78,15 @@ export const refreshToken = (req : Request , res : Response )=>{
   res.cookie("AccessToken", newAccessToken, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: 'none', maxAge: 15 * 60 * 1000 });
   res.cookie("RefreshToken", newRefreshToken, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: 'none', maxAge: 7 * 24 * 60 * 60 * 1000 });
 
-  res.json({ message: "Tokens renewed" });
-
-    
+ return res.json({ message: "Tokens renewed" });
 }
+
+export const dashboard = (req :Request , res : Response)=>{
+try{
+    return res.json({ message: `Welcome Admin` });
+
+}catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "internal server error" })
+}
+} 
