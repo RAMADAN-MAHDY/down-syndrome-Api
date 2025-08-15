@@ -74,6 +74,57 @@ axios.post('/api/admin/refreshToken', {}, {
 
 ---
 
+# وصف نقطة النهاية (Dashboard)
+
+## نقطة النهاية: `/api/admin/dashboard`
+- **الطريقة**: GET
+- **الوصف**: هذه النقطة تسمح للمسؤول بالوصول إلى لوحة التحكم بعد تسجيل الدخول بنجاح. تحتاج إلى مصادقة باستخدام `AccessToken` في الكوكيز.
+- **المتطلبات**:
+  - `AccessToken` صالح في الكوكيز
+  - يجب أن يكون المستخدم مسؤولاً
+
+**مثال باستخدام fetch:**
+```javascript
+fetch('/api/admin/dashboard', {
+  method: 'GET',
+  credentials: 'include', // لإرسال الكوكيز
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+**مثال باستخدام axios:**
+```javascript
+axios.get('/api/admin/dashboard', {
+  withCredentials: true, // لإرسال الكوكيز
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => console.log(response.data))
+.catch(error => console.error('Error:', error));
+```
+
+## الاستجابة المتوقعة
+```json
+{
+  "message": "Welcome Admin"
+}
+```
+
+## ملاحظات مهمة:
+1. يجب أن يكون `AccessToken` صالحاً وغير منتهي الصلاحية.
+2. إذا انتهت صلاحية `AccessToken`، يمكن استخدام `/api/admin/refreshToken` للحصول على واحد جديد.
+3. يجب تفعيل خيار `credentials` أو `withCredentials` لإرسال الكوكيز مع الطلب.
+
+---
+---
+
+
 ### 2. إدارة المحتوى
 - **الرابط**: `/api/admin/content`
 - **الطريقة**: POST
