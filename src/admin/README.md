@@ -1,6 +1,8 @@
 
 ## نقاط النهاية الرئيسية لل admin
 
+## لينك ال api الرئيسي https://down-syndrome-api.vercel.app 
+
 
 ### 1. مصادقة المسؤول (Admin Authentication)
 
