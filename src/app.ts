@@ -32,7 +32,7 @@ app.use(cookieParser());
 
 const corsOptions = {
     origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
     preflightContinue: false,
     optionsSuccessStatus: 204,
 };
