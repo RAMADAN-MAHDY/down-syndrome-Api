@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -18,6 +19,8 @@ import gitContactUS from './admin/routes/contactUs.js'
 import AddEvents from './admin/routes/Events.js'
 import adminRoutes from './admin/routes/aontentRoutes.js';
 import  AddArticle  from './admin/routes/articleRouter.js';
+import createadmin from './admin/routes/createAdmin.js'
+import logInAdmin from './admin/routes/loginAdmin.js'
 //--------------------------------------------------------------------
 
 dotenv.config();
@@ -25,6 +28,7 @@ dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 const corsOptions = {
     origin: "*",
@@ -32,7 +36,6 @@ const corsOptions = {
     preflightContinue: false,
     optionsSuccessStatus: 204,
 };
-
 app.use(cors(corsOptions));
 
 
@@ -50,6 +53,9 @@ app.use('/api/admin', adminRoutes); // انشاء وتحديث وحذف المح
 app.use('/api/admin', AddArticle); // انشاء وتحديث وحذف المقالات
 app.use('/api/admin', AddEvents); // ااضافة حدث جديد
 app.use('/api/admin', gitContactUS); // جلب بيانات التواصل
+app.use('/api/admin' , createadmin); //انشاء ادمن
+app.use('/api/admin' , logInAdmin); //تسجيل دخول الادمن
+
 
 app.get('/', (req, res) => {
     res.send('Welcome to the Down Syndrome API');   
