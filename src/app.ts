@@ -18,7 +18,7 @@ import createContactUs from './routes/contactUs.js'
 import gitContactUS from './admin/routes/contactUs.js'
 import AddEvents from './admin/routes/Events.js'
 import adminRoutes from './admin/routes/aontentRoutes.js';
-import  AddArticle  from './admin/routes/articleRouter.js';
+import  Article  from './admin/routes/articleRouter.js';
 import createadmin from './admin/routes/createAdmin.js'
 import logInAdmin from './admin/routes/loginAdmin.js'
 //--------------------------------------------------------------------
@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 const corsOptions = {
-    origin: "*",
+    origin: ["http://localhost:5173"],
     credentials: true,
     preflightContinue: false,
     optionsSuccessStatus: 204,
@@ -50,7 +50,7 @@ app.use('/api', contentRoutes); // جلب المحتوى
 
 // admin Routers
 app.use('/api/admin', adminRoutes); // انشاء وتحديث وحذف المحتوى
-app.use('/api/admin', AddArticle); // انشاء وتحديث وحذف المقالات
+app.use('/api/admin', Article); // انشاء وتحديث وحذف المقالات
 app.use('/api/admin', AddEvents); // ااضافة حدث جديد
 app.use('/api/admin', gitContactUS); // جلب بيانات التواصل
 app.use('/api/admin' , createadmin); //انشاء ادمن
