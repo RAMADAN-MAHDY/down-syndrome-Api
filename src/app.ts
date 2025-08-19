@@ -17,7 +17,7 @@ import createContactUs from './routes/contactUs.js'
 // import from admin  
 import gitContactUS from './admin/routes/contactUs.js'
 import AddEvents from './admin/routes/Events.js'
-import adminRoutes from './admin/routes/aontentRoutes.js';
+import content from './admin/routes/aontentRoutes.js';
 import  Article  from './admin/routes/articleRouter.js';
 import createadmin from './admin/routes/createAdmin.js'
 import logInAdmin from './admin/routes/loginAdmin.js'
@@ -49,7 +49,7 @@ app.use('/api', eventRoutes);
 app.use('/api', contentRoutes); // جلب المحتوى
 
 // admin Routers
-app.use('/api/admin', adminRoutes); // انشاء وتحديث وحذف المحتوى
+app.use('/api/admin', content); // انشاء وتحديث وحذف المحتوى
 app.use('/api/admin', Article); // انشاء وتحديث وحذف المقالات
 app.use('/api/admin', AddEvents); // ااضافة حدث جديد
 app.use('/api/admin', gitContactUS); // جلب بيانات التواصل
