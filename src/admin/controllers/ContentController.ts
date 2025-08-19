@@ -3,94 +3,120 @@ import ContentModel from '../../models/content.js';
 
 
 function convertToEmbedUrl(url: string): string {
-  if (url.includes('youtu.be')) {
-    const videoId = url.split('/').pop()?.split('?')[0];
-    return `https://www.youtube.com/embed/${videoId}`;
-  }
+    if (url.includes('youtu.be')) {
+        const videoId = url.split('/').pop()?.split('?')[0];
+        return `https://www.youtube.com/embed/${videoId}`;
+    }
 
-  if (url.includes('youtube.com/watch?v=')) {
-    const videoId = url.split('v=')[1]?.split('&')[0];
-    return `https://www.youtube.com/embed/${videoId}`;
-  }
+    if (url.includes('youtube.com/watch?v=')) {
+        const videoId = url.split('v=')[1]?.split('&')[0];
+        return `https://www.youtube.com/embed/${videoId}`;
+    }
 
-  // رجع الرابط الأصلي لو مش عارف يعالجه
-  return url;
+    // رجع الرابط الأصلي لو مش عارف يعالجه
+    return url;
 }
 
 
 // إضافة محتوى جديد
 export const addContent = async (req: Request, res: Response) => {
 
-    const { title, type, description, articleText, url, ageGroup, problemTag , sluge} = req.body;
+    try {
+        const { title, type, description, articleText, url, ageGroup, problemTag, sluge } = req.body;
 
-    console.log('Request Body:', problemTag);
-    if (!title || !type || !description || !ageGroup  ||!problemTag) {
-        return res.status(400).json({ error: 'مطلوب عنوان ونوع ووصف وفئة عمرية والمشكله' });
-    }
+        console.log('Request Body:', problemTag);
+        if (!title || !type || !description || !ageGroup || !problemTag) {
+            return res.status(400).json({ error: 'مطلوب عنوان ونوع ووصف وفئة عمرية والمشكله' });
+        }
         if (!articleText && !url) {
             return res.status(400).json({ error: 'مطلوب نص المقال أو رابط' });
         }
-        if(sluge !== 'vid' && sluge !== 'text') {
-            return res.status(400).json({ error: 'نوع المحتوى غير صالح لازم يكون vid or text'  });
+        if (sluge !== 'vid' && sluge !== 'text') {
+            return res.status(400).json({ error: 'نوع المحتوى غير صالح لازم يكون vid or text' });
         }
         // إذا كان النوع هو فيديو، يجب أن يكون الرابط صالحًا
         if (sluge === 'vid' && !url) {
             return res.status(400).json({ error: 'مطلوب رابط الفيديو' });
-        }   
-       const VidUrl = convertToEmbedUrl(url);
+        }
+        const VidUrl = url ? convertToEmbedUrl(url) : undefined;
+
+
+        const newContent = new ContentModel({
+            title,
+            sluge,
+            type,
+            description,
+            articleText: sluge === 'text' ? articleText : undefined, // إذا كان النوع نص، نضيف النص
+            url: sluge === 'vid' ? VidUrl : undefined, // إذا كان النوع فيديو، نضيف الرابط
+            ageGroup,
+            problemTag,
+        });
+
+        const savedContent = await newContent.save();
+        return res.status(201).json(savedContent);
+
+
+    } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        return res.status(500).json({ error: 'خطأ في اضافة المحتوي', details: errorMessage });
+    }
+
+
+};
+
+
+// Edit content 
+export const EditContent = async (req: Request, res: Response) => {
+    try {
+        const data = req.body;
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({ message: "رجاك ارسال ال ID الخاص بالمحتوي " })
+        }
+        if (!data || Object.keys(data).length === 0) {
+            return res.status(400).json({ message: "رجاك ارسال البانات المطلوب تعديلها" })
+        }
+
+        const resultData = await ContentModel.findByIdAndUpdate(id, data, { new: true });
+
+        if (!resultData) {
+            return res.status(404).json({
+                message: "حدث خطأ غير متوقع يرجي اعادة المحاوله "
+            });
+        }
+
+        return res.status(200).json({
+            message: "تم تحديث المحتوي بنجاح",
+            content: resultData
+        });
+    } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        return res.status(500).json({ error: 'خطأ في تعديل المحتوي', details: errorMessage });
+    }
+}
+
+
+export const DeleteContent = async (req: Request, res: Response) => {
+    try {
+
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({ message: "رجاك ارسال ال ID الخاص بالمحتوي " })
+        }
+
+        const result = await ContentModel.findByIdAndDelete(id);
+
+        if (!result) {
+            return res.status(404).json({ message: "المحتوى غير موجود أو تم حذفه بالفعل" });
+        }
         
-   
-    const newContent = new ContentModel({
-        title,  
-        sluge,
-        type,
-        description,
-        articleText : sluge === 'text' ? articleText : undefined, // إذا كان النوع نص، نضيف النص
-        url : sluge === 'vid' ? VidUrl : undefined, // إذا كان النوع فيديو، نضيف الرابط
-        ageGroup,
-        problemTag,
-    });
-    newContent.save()
-        .then(content => res.status(201).json(content))
-        .catch(err => res.status(500).json({ error: 'خطأ في حفظ المحتوى', details: err.message }));
+        return res.status(200).json({ message: "تم الحذف بجاح" });
 
-};
+    } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        return res.status(500).json({ error: "خطا في حذقف المحتوي", details: errorMessage })
+    }
 
-
-
-export const adminLogin = (req: Request, res: Response) => {
-  // تسجيل دخول المسؤول
-  res.json({ success: true, token: 'admin-token' });
-};
-
-
-export const updateContent = (req: Request, res: Response) => {
-  // تحديث محتوى موجود
-  res.json({ success: true });
-};
-
-export const deleteContent = (req: Request, res: Response) => {
-  // حذف محتوى
-  res.json({ success: true });
-};
-
-
-export const addEvent = (req: Request, res: Response) => {
-  // إضافة فعالية جديدة
-  res.json({ success: true, id: 1 });
-};
-
-export const updateEvent = (req: Request, res: Response) => {
-  // تحديث فعالية موجودة
-  res.json({ success: true });
-};
-
-export const deleteEvent = (req: Request, res: Response) => {
-  // حذف فعالية
-  res.json({ success: true });
-};
-
-export const getAllEvents = (req: Request, res: Response) => {
-  // جلب جميع الفعاليات
-  res.json([{ id: 1, name: 'فعالية إدارية' }]);
-};
+}

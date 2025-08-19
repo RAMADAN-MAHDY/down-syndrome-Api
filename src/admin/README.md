@@ -161,6 +161,83 @@ fetch('/api/admin/content', {
 })
 ```
 
+# 📘 دليل استخدام API للتعديل والحذف (Admin Content API)
+------------------------------------------------------------------------
+
+## 🔹 تعديل محتوى (PATCH)
+
+**Endpoint:**
+
+    PATCH /api/admin/content-Edit/:id
+
+### ✅ مثال باستخدام `fetch`:
+
+``` javascript
+fetch('/api/admin/content-Edit/64f1e3d9a1b23d0012c34567', {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  credentials: 'include', // مهم علشان يبعت الكوكيز
+  body: JSON.stringify({
+    title: "عنوان جديد",
+    description: "وصف محدث",
+  })
+})
+.then(res => res.json())
+.then(data => console.log(data))
+.catch(err => console.error(err));
+```
+
+### ✅ مثال باستخدام `axios`:
+
+``` javascript
+import axios from 'axios';
+
+axios.patch('/api/admin/content-Edit/64f1e3d9a1b23d0012c34567', {
+  title: "عنوان جديد",
+  description: "وصف محدث",
+}, {
+  withCredentials: true // مهم علشان يبعت الكوكيز
+})
+.then(res => console.log(res.data))
+.catch(err => console.error(err));
+```
+
+------------------------------------------------------------------------
+
+## 🔹 حذف محتوى (DELETE)
+
+**Endpoint:**
+
+    DELETE /api/admin/content-Delete/:id
+
+### ✅ مثال باستخدام `fetch`:
+
+``` javascript
+fetch('/api/admin/content-Delete/64f1e3d9a1b23d0012c34567', {
+  method: 'DELETE',
+  credentials: 'include' // مهم علشان يبعت الكوكيز
+})
+.then(res => res.json())
+.then(data => console.log(data))
+.catch(err => console.error(err));
+```
+
+### ✅ مثال باستخدام `axios`:
+
+``` javascript
+import axios from 'axios';
+
+axios.delete('/api/admin/content-Delete/64f1e3d9a1b23d0012c34567', {
+  withCredentials: true // مهم علشان يبعت الكوكيز
+})
+.then(res => console.log(res.data))
+.catch(err => console.error(err));
+```
+
+---
+
 ### 3. إدارة الأحداث
 - **الرابط**: `/api/admin/AddEvents`
 - **الطريقة**: POST

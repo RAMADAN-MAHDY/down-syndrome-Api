@@ -75,7 +75,7 @@ const EditArticle = async (req: Request, res: Response) => {
 
     } catch (err) {
         const errorMessage = err instanceof Error ? err.message : String(err);
-        return res.status(500).json({ error: 'خطأ في إضافة المقال', details: errorMessage });
+        return res.status(500).json({ error: 'خطأ في تعديل المقال', details: errorMessage });
     }
 }
 
@@ -100,7 +100,7 @@ const DeleteArticle = async (req: Request, res: Response) => {
 
     } catch (err) {
         const errorMessage = err instanceof Error ? err.message : String(err);
-        return res.status(500).json({ error: 'خطأ في إضافة المقال', details: errorMessage });
+        return res.status(500).json({ error: 'خطأ في حذف المقال', details: errorMessage });
     }
 }
 
