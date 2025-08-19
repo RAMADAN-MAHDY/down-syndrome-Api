@@ -74,6 +74,7 @@ axios.post('/api/admin/refreshToken', {}, {
 ```
 
 
+
 ---
 
 # وصف نقطة النهاية (Dashboard)
@@ -117,6 +118,24 @@ axios.get('/api/admin/dashboard', {
   "message": "Welcome Admin"
 }
 ```
+
+---
+
+# 🚪 Logout Admin
+
+## POST /api/admin/logOutAdmin
+
+Description:
+Clear AccessToken & refreshToken cookies (end session).
+
+
+Response (200):
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
 
 ## ملاحظات مهمة:
 1. يجب أن يكون `AccessToken` صالحاً وغير منتهي الصلاحية.
