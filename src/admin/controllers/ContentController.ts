@@ -20,11 +20,15 @@ function convertToEmbedUrl(url: string): string {
 
 // إضافة محتوى جديد
 export const addContent = async (req: Request, res: Response) => {
-
+    // ["تعليم", "صحة", "رياضه"] 
     try {
         const { title, type, description, articleText, url, ageGroup, problemTag, sluge } = req.body;
+        const allowedTypes = ["تعليم", "صحة", "رياضه"];
 
-        console.log('Request Body:', problemTag);
+        if (!allowedTypes.includes(type)) {
+            return res.status(400).json({ error: 'النوع لازم يكون واحد من الخيارات دي ["تعليم", "صحة", "رياضه"] ' });
+
+        }
         if (!title || !type || !description || !ageGroup || !problemTag) {
             return res.status(400).json({ error: 'مطلوب عنوان ونوع ووصف وفئة عمرية والمشكله' });
         }
@@ -111,7 +115,7 @@ export const DeleteContent = async (req: Request, res: Response) => {
         if (!result) {
             return res.status(404).json({ message: "المحتوى غير موجود أو تم حذفه بالفعل" });
         }
-        
+
         return res.status(200).json({ message: "تم الحذف بجاح" });
 
     } catch (err) {

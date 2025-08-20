@@ -25,26 +25,3 @@ export const getContentFilter =async (req: Request, res: Response) => {
     }
 };
 
-
-
-
-
-
-
-
-
-
-
-export const searchArticles = (req: Request, res: Response) => {
-  // البحث عن المقالات بالكلمات المفتاحية
-  const { keyword } = req.query;
-  res.json([{ id: 1, title: `بحث: ${keyword}` }]);
-};
-
-export const getArticleTopics = (req: Request, res: Response) => {
-  // جلب خيارات التصفية (المواضيع والفئات العمرية)
-  res.json({
-    topics: ['الصحة', 'التعليم', 'الأنشطة'],
-    ageGroups: ['0-3 سنوات', '4-12 سنة', '13-18 سنة', '18+ سنة']
-  });
-};
