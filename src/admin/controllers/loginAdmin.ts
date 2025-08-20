@@ -2,7 +2,7 @@ import AdminModel from '../../models/createAdmin.js';
 import { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { AES, enc } from 'crypto-ts';
-import { generateToken, verifyToken , generateRefreshToken  , verifyRefreshToken} from '../../utils/jwt.js';
+import { generateToken , generateRefreshToken  , verifyRefreshToken} from '../../utils/jwt.js';
 dotenv.config();
 
 export const logInAdmin = async (req: Request, res: Response) => {
@@ -90,8 +90,6 @@ try{
     return res.status(500).json({ message: "internal server error" })
 }
 } 
-
-
 
 
 export const logOutAdmin = (req: Request, res: Response) => {

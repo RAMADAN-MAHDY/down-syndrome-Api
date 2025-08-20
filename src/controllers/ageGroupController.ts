@@ -36,16 +36,3 @@ export const getAgeGroups = async (req: Request, res: Response) => {
 };
 
 
-
-export const getGuidanceContent = (req: Request, res: Response) => {
-  // استرجاع محتوى إرشادي لفئة عمرية محددة
-  const { ageGroupId } = req.params;
-  res.json({
-    ageGroupId,
-    articles: [
-      { id: 1, title: 'مقال إرشادي', type: 'text', content: 'محتوى نصي' },
-      { id: 2, title: 'فيديو توجيهي', type: 'video', url: 'https://youtube.com/example' }
-    ]
-  });
-};
-
