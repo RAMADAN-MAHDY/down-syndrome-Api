@@ -260,7 +260,7 @@ axios.delete('/api/admin/content-Delete/64f1e3d9a1b23d0012c34567', {
 
 # 🔄 API Responses Table
 
-## ✏️ تعديل المحتوى (PATCH /api/admin/content-Edit/\:id)
+## ✏️ تعديل المحتوى (PATCH /api/admin/content-Edit/:id)
 
 | Status | Description           | Response Example                                                                                                                                                   |
 | ------ | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
