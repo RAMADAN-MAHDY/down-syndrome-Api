@@ -19,8 +19,9 @@ import gitContactUS from './admin/routes/contactUs.js'
 import Events from './admin/routes/Events.js'
 import content from './admin/routes/aontentRoutes.js';
 import  Article  from './admin/routes/articleRouter.js';
-import createadmin from './admin/routes/createAdmin.js'
-import logInAdmin from './admin/routes/loginAdmin.js'
+import createadmin from './admin/routes/createAdmin.js';
+import logInAdmin from './admin/routes/loginAdmin.js';
+import getCounts from './admin/routes/countsOfAllCollection.js';
 //--------------------------------------------------------------------
 
 dotenv.config();
@@ -52,8 +53,9 @@ app.use('/api/admin', content); // انشاء وتحديث وحذف المحتو
 app.use('/api/admin', Article); // انشاء وتحديث وحذف المقالات
 app.use('/api/admin', Events); // ااضافة حدث جديد
 app.use('/api/admin', gitContactUS); // جلب بيانات التواصل
-app.use('/api/admin' , createadmin); //انشاء ادمن
-app.use('/api/admin' , logInAdmin); //تسجيل دخول الادمن
+app.use('/api/admin', createadmin); //انشاء ادمن
+app.use('/api/admin', logInAdmin); //تسجيل دخول الادمن
+app.use('/api/admin', getCounts); //جلب اعداد المخططات
 
 
 app.get('/', (req, res) => {
