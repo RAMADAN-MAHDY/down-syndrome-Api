@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 const corsOptions = {
-    origin: ["http://localhost:5173"  , "down-syndrome-one.vercel.app"],
+    origin: ["http://localhost:5173"  , "https://down-syndrome-one.vercel.app"],
   optionsSuccessStatus: 200,
   credentials: true
 };
