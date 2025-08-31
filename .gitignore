@@ -28,7 +28,6 @@ yarn-error.log*
 # SQLite database files
 
 .idea/
-.vscode/
 # IDE/editor settings
 
 *.bak
@@ -37,3 +36,7 @@ yarn-error.log*
 tmp/
 temp/
 # Temporary files and folders
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
